@@ -47,6 +47,7 @@ namespace AcDoNetTool.Common
             {
                 result = chineseStr.Substring(numIndex, 1);
             }
+            //123
             return result;
         }
 
