@@ -316,7 +316,7 @@ namespace AcDoNetTool.Common
             result = Get32MD52(result);
             result = Get16MD51(result);
             result = Get16MD52(result);
-            return Get32MD51(result)
+            return Get32MD51(result);
         }
     }
 }
