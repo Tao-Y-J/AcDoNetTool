@@ -32,17 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="accoremgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\accoremgd.dll</HintPath>
+    <Reference Include="accoremgd">
+      <HintPath>Exdll\accoremgd.dll</HintPath>
     </Reference>
-    <Reference Include="acdbmgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\acdbmgd.dll</HintPath>
+    <Reference Include="acdbmgd">
+      <HintPath>Exdll\acdbmgd.dll</HintPath>
     </Reference>
-    <Reference Include="acmgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\acmgd.dll</HintPath>
+    <Reference Include="acmgd">
+      <HintPath>Exdll\acmgd.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
