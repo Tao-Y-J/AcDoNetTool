@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Web.UI;
+using System.Windows.Forms;
 
 namespace AcDoNetTool.Common
 {
@@ -318,6 +323,91 @@ namespace AcDoNetTool.Common
             result = Get16MD51(result);
             result = Get16MD52(result);
             return Get32MD51(result);
+        }
+
+        /// <summary>
+        /// 合并单元格
+        /// </summary>
+        /// <param name="e"></param>
+        public static void DataGridViewMergeRows(DataGridView dataGridView, DataGridViewCellPaintingEventArgs e, List<int> mergeColumns)
+        {
+            bool flag = false;
+            foreach (var item in mergeColumns)
+            {
+                if (item == e.ColumnIndex)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (flag == false)
+            {
+                return;
+            }
+
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && e.Value.ToString() != string.Empty)
+            {
+                #region
+                int UpRows = 0;//上面相同的行数
+                int DownRows = 0;//下面相同的行数
+                int cellwidth = e.CellBounds.Width;//列宽
+                //获取下面的行数
+                for (int i = e.RowIndex; i < dataGridView.Rows.Count; i++)
+                {
+                    if (dataGridView.Rows[i].Cells[e.ColumnIndex].Value.ToString().Equals(e.Value.ToString()) && dataGridView.Rows[i].Cells[0].Value.ToString().Equals(dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString()))
+                    {
+                        DownRows++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                //获取上面的行数
+                for (int i = e.RowIndex; i >= 0; i--)
+                {
+                    if (dataGridView.Rows[i].Cells[e.ColumnIndex].Value.ToString().Equals(e.Value.ToString()))
+                    {
+                        UpRows++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                int count = UpRows + DownRows - 1;
+                using (Brush gridBrush = new SolidBrush(dataGridView.GridColor), backColorBrush = new SolidBrush(e.CellStyle.BackColor))
+                {
+                    using (Pen gridLinePen = new Pen(gridBrush))
+                    {
+                        //清除单元格
+                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds);
+
+                        if (e.Value != null)
+                        {
+                            int cellheight = e.CellBounds.Height;
+                            SizeF size = e.Graphics.MeasureString(e.Value.ToString(), e.CellStyle.Font);
+
+                            e.Graphics.DrawString((e.Value).ToString(), e.CellStyle.Font, Brushes.Black, e.CellBounds.X + (cellwidth - size.Width) / 2, e.CellBounds.Y - cellheight * (UpRows - 1) + (cellheight * count - size.Height) / 2, StringFormat.GenericDefault);
+                        }
+                        //如果下一行数据不等于当前行数据，则画当前单元格底边线
+                        if (e.RowIndex < dataGridView.Rows.Count - 1 && (dataGridView.Rows[e.RowIndex + 1].Cells[e.ColumnIndex].Value.ToString() != e.Value.ToString()))
+                        {
+                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                        }
+                        if (e.RowIndex == dataGridView.Rows.Count - 1)
+                        {
+                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left + 2, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
+                            count = 0;
+                        }
+                        //画grid右边线
+                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1, e.CellBounds.Top, e.CellBounds.Right - 1, e.CellBounds.Bottom);
+                        e.Handled = true;
+                    }
+                }
+                #endregion
+            }
         }
     }
 }
