@@ -14,6 +14,8 @@ namespace AcDoNetTool.Common
 {
     public static class CommonTool
     {
+        public static Random RandomNum { get; } = new Random();
+
         public static string Guid => System.Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
         /// <summary>
@@ -193,12 +195,10 @@ namespace AcDoNetTool.Common
         /// <param name="minValue">起始</param>
         /// <param name="maxValue">结束</param>
         /// <returns></returns>
-        public static int GetRandomNumber(int minValue, int maxValue)
+        public static IEnumerable<int> GetRandomNumber(int minValue, int maxValue)
         {
-            Thread.Sleep(1);
-            string guid = Guid;
-            Random randomNum = new Random(guid.GetHashCode());
-            return randomNum.Next(minValue, maxValue);
+            while (true)
+                yield return RandomNum.Next(minValue, maxValue);
         }
 
         /// <summary>
@@ -206,24 +206,20 @@ namespace AcDoNetTool.Common
         /// </summary>
         /// <param name="maxValue">范围</param>
         /// <returns></returns>
-        public static int GetRandomNumber(int maxValue)
+        public static IEnumerable<int> GetRandomNumber(int maxValue)
         {
-            Thread.Sleep(1);
-            string guid = Guid;
-            Random randomNum = new Random(guid.GetHashCode());
-            return randomNum.Next(maxValue);
+            while (true)
+                yield return RandomNum.Next(maxValue);
         }
 
         /// <summary>
         /// 获取随机数
         /// </summary>
         /// <returns></returns>
-        public static int GetRandomNumber()
+        public static IEnumerable<int> GetRandomNumber()
         {
-            Thread.Sleep(1);
-            string guid = Guid;
-            Random randomNum = new Random(guid.GetHashCode());
-            return randomNum.Next();
+            while (true)
+                yield return RandomNum.Next();
         }
 
         /// <summary>
@@ -409,6 +405,26 @@ namespace AcDoNetTool.Common
                 }
                 #endregion
             }
+        }
+
+        /// <summary>
+        /// 根据函数生成东西
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> GenerateBy<T>(Func<T> f)
+        {
+            for (; ; )
+            {
+                yield return f();
+            }
+            //foreach (var i in CommonTool.GenerateBy(() => r.Next(1, 10)).Take(10))
+            //{
+            //}
+            //foreach (var i in CommonTool.GenerateBy(() => t++).Take(10))
+            //{
+            //}
         }
 
         /// <summary>
