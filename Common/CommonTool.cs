@@ -14,8 +14,6 @@ namespace AcDoNetTool.Common
 {
     public static class CommonTool
     {
-        public static Random RandomNum { get; } = new Random();
-
         public static string Guid => System.Guid.NewGuid().ToString().Replace("-", "").ToUpper();
 
         /// <summary>
@@ -187,39 +185,6 @@ namespace AcDoNetTool.Common
                 double.TryParse(secondString, out secondNum);
             }
             return (firstNum / secondNum).ToString();
-        }
-
-        /// <summary>
-        /// 获取随机数
-        /// </summary>
-        /// <param name="minValue">起始</param>
-        /// <param name="maxValue">结束</param>
-        /// <returns></returns>
-        public static IEnumerable<int> GetRandomNumber(int minValue, int maxValue)
-        {
-            while (true)
-                yield return RandomNum.Next(minValue, maxValue);
-        }
-
-        /// <summary>
-        /// 获取随机数
-        /// </summary>
-        /// <param name="maxValue">范围</param>
-        /// <returns></returns>
-        public static IEnumerable<int> GetRandomNumber(int maxValue)
-        {
-            while (true)
-                yield return RandomNum.Next(maxValue);
-        }
-
-        /// <summary>
-        /// 获取随机数
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<int> GetRandomNumber()
-        {
-            while (true)
-                yield return RandomNum.Next();
         }
 
         /// <summary>

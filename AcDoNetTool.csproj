@@ -61,6 +61,7 @@
     <Compile Include="Cad\LayerTool.cs" />
     <Compile Include="Common\CommonTool.cs" />
     <Compile Include="Common\JsonHelper.cs" />
+    <Compile Include="Common\Rand.cs" />
     <Compile Include="Log\LoggerTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
