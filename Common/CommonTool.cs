@@ -410,5 +410,22 @@ namespace AcDoNetTool.Common
                 #endregion
             }
         }
+
+        /// <summary>
+        /// 数组降维
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> values)
+        {
+            foreach (var value in values)
+            {
+                foreach (var item in value)
+                {
+                    yield return item;
+                }
+            }
+        }
     }
 }
