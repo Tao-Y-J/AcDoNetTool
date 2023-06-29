@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Net.Http;
@@ -329,7 +330,7 @@ namespace AcDoNetTool.Common
         /// 合并单元格
         /// </summary>
         /// <param name="e"></param>
-        public static void DataGridViewMergeRows(DataGridView dataGridView, DataGridViewCellPaintingEventArgs e, List<int> mergeColumns)
+        public static void DataGridViewMergeRows(DataGridView dataGridView, DataGridViewCellPaintingEventArgs e, IEnumerable<int> mergeColumns)
         {
             bool flag = false;
             foreach (var item in mergeColumns)
